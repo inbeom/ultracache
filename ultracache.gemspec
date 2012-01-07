@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Inbeom Hwang"]
   s.email       = ["inbeom@wafflestudio.com"]
   s.homepage    = "http://github.com/inbeom/ultracache"
-  s.summary     = "Model-level cache for dynamic attributes"
-  s.description = "Ultracache reduces cost needed by dynamic attribute computation by caching them into Redis"
+  s.summary     = "Redis based cache for ActiveModel"
+  s.description = "Ultracache reduces computational costs occur from dynamic attributes by caching them into Redis"
 
   s.add_dependency("activemodel", ["~> 3.0"])
   s.add_dependency("activesupport", ["~> 3.0"])

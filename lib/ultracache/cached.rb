@@ -23,7 +23,8 @@ module Ultracache
       extend ActiveModel::Callbacks
       define_model_callbacks :save, :destroy
 
-      after_save :save_cache
+      after_create :save_cache
+      after_update :update_cache
       after_destroy :destroy_cache
 
       unless Ultracache::Configurations.find_relationships(self, :strict => true)

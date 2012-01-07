@@ -1,3 +1,4 @@
+require 'bundler'
 require 'rspec/core/rake_task'
 
 desc 'Default: run specs.'
@@ -16,8 +17,4 @@ RSpec::Core::RakeTask.new(:coverage) do |t|
   t.rcov_opts = ['--exclude', 'spec']
 end
 
-task :gem => :build
-task :build do
-  system "gem build ultracache.gemspec"
-end
-
+Bundler::GemHelper.install_tasks

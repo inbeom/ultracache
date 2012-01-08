@@ -4,9 +4,6 @@ module Ultracache
       super(name, options)
       @serializer_method = options[:serializer]
       @serializing_block = block if block_given?
-
-      @serializer = Ultracache::Configurations.serializer
-      @storage = Ultracache::Configurations.storage
     end
 
     def key(obj)
@@ -18,14 +15,14 @@ module Ultracache
     # serializeing hash returned by its `as_json` method.
     def save_cache(obj)
       value = if @serializer_method
-        @serializer.serialize(obj.send(@serializer_method))
+        serializer.serialize(obj.send(@serializer_method))
       elsif @serializing_block
-        @serializer.serialize(@serializing_block.call(obj))
+        serializer.serialize(@serializing_block.call(obj))
       else
-        @serializer.serialize(obj.as_json)
+        serializer.serialize(obj.as_json)
       end
 
-      @storage.set(key(obj), value)
+      storage.set(key(obj), value)
       value
     end
 
@@ -34,12 +31,12 @@ module Ultracache
     def read_cache(obj, options = {})
       k = key(obj)
 
-      @storage.get(k) || save_cache(obj)
+      storage.get(k) || save_cache(obj)
     end
 
     # Destroys cache from storage
     def destroy_cache(obj)
-      @storage.del(key(obj))
+      storage.del(key(obj))
     end
 
     # Updates value of existing cache. Its behavior is same with that of

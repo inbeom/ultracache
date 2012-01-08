@@ -20,5 +20,14 @@ module Ultracache
     def save_cache(obj); end
     def destroy_cache(obj); end
     def update_cache(obj); end
+
+    protected
+      def storage
+        Ultracache::Configurations.storage
+      end
+
+      def serializer
+        Ultracache::Configurations.serializer
+      end
   end
 end

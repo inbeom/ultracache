@@ -6,9 +6,6 @@ module Ultracache
       @alias = options[:as]
       @need_update = options[:need_update]
       @unless = options[:unless]
-
-      @storage = Ultracache::Configurations.storage
-      @serializer = Ultracache::Configurations.serializer
     end
 
     # Saves serialized form of object into cache queue which the object
@@ -24,10 +21,10 @@ module Ultracache
       value = if @serializer_block
         @serializer_block.call obj
       else
-        JSON.generate(obj.as_json)
+        serializer.serialize(obj.as_json)
       end
 
-      @storage.put_queue(key(obj), score_of(obj), value)
+      storage.put_queue(key(obj), score_of(obj), value)
     end
 
     # Destroys serialized cache from associated cache queue. In some cases
@@ -42,21 +39,21 @@ module Ultracache
       score = score_of(obj)
       key = key(obj)
 
-      docs = @storage.get_queue(key, :from => score, :to => score)
+      docs = storage.get_queue(key, :from => score, :to => score)
 
       if docs.count == 1
         # Only one document is fetched from queue, and it is okay to remove
-        @storage.remove_from_queue_by_range(key, :from => score, :to => score)
+        storage.remove_from_queue_by_range(key, :from => score, :to => score)
       elsif docs.count > 1
         # We should deserialize fetched documents to find the document having
         # the same id with `obj`
         docs.each do |doc|
-          deserialized = @serializer.deserialize(doc)
+          deserialized = serializer.deserialize(doc)
           _id = deserialized["id"]
           _id = deserialized["_id"] unless _id
 
           if _id == obj.id
-            @storage.remove_from_queue(key, doc)
+            storage.remove_from_queue(key, doc)
           end
         end
       end
@@ -83,13 +80,6 @@ module Ultracache
     protected
       def score_of(obj)
         obj.respond_to?(:cached_queue_score) ? obj.cached_queue_score : obj.id
-      end
-
-      def serialize(obj)
-        # Is it okay to refer configurations object here?
-        @serializer.serialize(obj) do |obj|
-          @serializer_block.call(obj)
-        end
       end
   end
 end

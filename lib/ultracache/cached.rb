@@ -21,7 +21,7 @@ module Ultracache
 
     included do
       extend ActiveModel::Callbacks
-      define_model_callbacks :save, :destroy
+      define_model_callbacks :create, :update, :destroy
 
       after_create :save_cache
       after_update :update_cache

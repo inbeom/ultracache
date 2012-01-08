@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe Ultracache::Serializer::JsonSerializer do
   let(:serializer) { Ultracache::Serializer::JsonSerializer.new }
-  let(:obj) { Person.new }
+  let(:person) { Person.new }
 
   describe "#serialize" do
     it "serializes object to JSON" do
-      serialized_str = serializer.serialize(obj) do
+      serialized_str = serializer.serialize(person) do |obj|
         { :id => obj.id }
       end
 

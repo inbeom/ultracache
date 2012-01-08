@@ -2,10 +2,8 @@ require "spec_helper"
 
 describe Ultracache::BelongsAsCachedQueue do
   let(:belongs_as_cached_queue) do
-    Ultracache::BelongsAsCachedQueue.new :cached_posts,
-      :self_class => Post, :associated_class => Person do |p|
-      p.to_json
-    end
+    Ultracache::BelongsAsCachedQueue.new :cached_posts, nil,
+      :self_class => Post, :associated_class => Person
   end
 
   describe "#key" do

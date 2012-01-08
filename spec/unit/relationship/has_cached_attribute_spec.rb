@@ -8,7 +8,7 @@ describe Ultracache::HasCachedAttribute do
   end
 
   let(:cached_attribute) do
-    Ultracache::HasCachedAttribute.new :cached_name,
+    Ultracache::HasCachedAttribute.new :cached_name, nil,
       :self_class => Person, :serializer_block => person_attribute_block
   end
 

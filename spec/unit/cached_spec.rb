@@ -2,7 +2,13 @@ require "spec_helper"
 
 describe Ultracache::Cached do
   before do
-    Ultracache::Configurations.storage = Ultracache::Storage::Redis.new(:urls => ['localhost:6379'])
+    Ultracache::Configurations.storage = Ultracache::Storage::Redis.new(:urls => ['redis://localhost:6379/1'])
+    Ultracache::Configurations.serializer = Ultracache::Serializer::JsonSerializer.new
+  end
+
+  after do
+    Ultracache::Configurations.storage = nil
+    Ultracache::Configurations.serializer = nil
   end
 
   context "without model hierarchy" do

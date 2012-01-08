@@ -8,7 +8,7 @@ module Rails
       initializer 'ultracache' do |app|
         if defined? ::Mongoid
           require File.join(File.dirname(__FILE__), 'models/mongoid_extension.rb')
-          ::Mongoid::Document.send :include, Ultracache::Models::MongoidExtension
+          ::Mongoid::Document.send :include, ::Ultracache::Models::MongoidExtension
         end
       end
     end

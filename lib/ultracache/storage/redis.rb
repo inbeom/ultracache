@@ -5,10 +5,8 @@ require 'json'
 module Ultracache
   module Storage
     class Redis
-      include Storage
-
       def initialize(options = {})
-        @urls = options[:urls] || 'localhost'
+        @urls = options[:urls] || ['redis://localhost:6379/1']
       end
 
       def connection

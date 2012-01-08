@@ -4,6 +4,7 @@ module Ultracache
   module Serializer
     class JsonSerializer < Serializer::Base
       def serialize(obj, &block)
+        obj = block.call(obj) if block_given?
         JSON.generate(obj)
       end
 

@@ -13,14 +13,13 @@ module Ultracache
       end
 
       def has_cached_queue(another, options={})
-        name = options[:as] ? options[:as] : another
-        relationship = HasCachedQueue.new name, :self_class => self,
+        relationship = HasCachedQueue.new another, :self_class => self,
           :associated_class => options[:class] ? options[:class] : another
 
         self.relationships(:strict => true).add(relationship)
 
-        define_method name do |*options|
-          read_cache(name, options.first || {})
+        define_method another do |*options|
+          read_cache(another, options.first || {})
         end
       end
 
@@ -28,7 +27,6 @@ module Ultracache
         relationship = HasCachedAttribute.new name, block, :self_class => self,
           :serializer => options[:serializer]
 
-        rs = self.relationships(:strict => true)
         self.relationships(:strict => true).add(relationship)
 
         define_method name do |*options|

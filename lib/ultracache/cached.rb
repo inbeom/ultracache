@@ -20,8 +20,10 @@ module Ultracache
     include Macro
 
     included do
-      extend ActiveModel::Callbacks
-      define_model_callbacks :create, :update, :destroy
+      extend ActiveModel::Callbacks   unless respond_to?(:define_model_callbacks)
+      define_model_callbacks :create  unless respond_to?(:after_create)
+      define_model_callbacks :update  unless respond_to?(:after_update)
+      define_model_callbacks :destroy unless respond_to?(:after_destroy)
 
       after_create :save_cache
       after_update :update_cache

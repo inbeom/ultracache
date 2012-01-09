@@ -31,7 +31,13 @@ module Ultracache
     def read_cache(obj, options = {})
       k = key(obj)
 
-      storage.get(k) || save_cache(obj)
+      ret = storage.get(k) || save_cache(obj)
+
+      if options[:deserialized]
+        serializer.deserialize(ret)
+      else
+        ret
+      end
     end
 
     # Destroys cache from storage

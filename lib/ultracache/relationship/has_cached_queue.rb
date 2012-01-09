@@ -17,12 +17,18 @@ module Ultracache
       k = self.key(obj)
 
       fetch_by = @fetch_by || options[:fetch_by]
-      if fetch_by && fetch_by == :rank
+      result = if fetch_by && fetch_by == :rank
         storage.get_queue_by_rank(k, options)
       elsif options[:per_page]
         storage.get_queue_paged(k, options)
       else
         storage.get_queue(k, options)
+      end
+
+      if options[:deserialized]
+        result.map { |str| serializer.deserialize(str) }
+      else
+        result
       end
     end
   end

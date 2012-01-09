@@ -39,14 +39,6 @@ module Ultracache
     def read_cache(name, options={})
       relationship = self.class.relationships.find(name.to_sym)
       strings = relationship.read_cache(self, options)
-
-      if options[:deserialized]
-        return strings.map do |str|
-          Ultracache::Configurations.serializer.deserialize str
-        end
-      else
-        return strings
-      end
     end
 
     # Save caches of all relationships assigned to the class. If `:only` option is

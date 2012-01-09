@@ -11,10 +11,7 @@ module Ultracache
     # Saves serialized form of object into cache queue which the object
     # has a relationship to.
     #
-    # The first parameter, `obj`, is the object which will be stored into
-    # cache queue. `storage` parameter is 
-    #
-    # @return Serialized form of the object
+    # `obj`, is the object which will be stored into cache queue.
     def save_cache(obj)
       return if @unless && obj.send(@unless)
 

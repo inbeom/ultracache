@@ -17,8 +17,8 @@ Gem::Specification.new do |s|
   s.add_dependency("redis", ["~> 2.2"])
   s.add_dependency("json")
 
+  s.add_development_dependency("rake")
   s.add_development_dependency("rspec", ["~> 2.8"])
-  s.add_development_dependency("mocha")
   s.add_development_dependency("bson_ext")
   s.add_development_dependency("mongoid")
 

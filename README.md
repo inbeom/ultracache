@@ -1,6 +1,9 @@
 Ultracache
 ==========
 
+[![Build Status](https://secure.travis-ci.org/inbeom/ultracache.png)](http://travis-ci.org/inbeom/ultracache)
+
+
 Ultracache provides model-level interfaces for better abstraction of
 your cached data. You can organize and store/fetch cached data easily
 through the provided interfaces. You can boost up the response time of
